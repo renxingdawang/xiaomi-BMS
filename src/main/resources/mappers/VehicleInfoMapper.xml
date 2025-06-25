@@ -17,4 +17,9 @@
         SELECT * FROM vehicle_info WHERE delete_time IS NULL
     </select>
 
+    <select id="selectByCid" resultType="org.example.xiaomibms.entity.VehicleInfo">
+        SELECT * FROM vehicle_info WHERE cid = #{cid} AND delete_time IS NULL
+    </select>
+
+
 </mapper>

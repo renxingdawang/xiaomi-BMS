@@ -9,4 +9,5 @@ public interface VehicleInfoMapper {
     void insert(VehicleInfo vehicleInfo);
     VehicleInfo selectByVid(String vid);
     List<VehicleInfo> selectAll();
+    VehicleInfo selectByCid(Integer cid);
 }
