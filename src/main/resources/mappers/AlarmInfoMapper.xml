@@ -1,0 +1,17 @@
+<mapper namespace="org.example.xiaomibms.mapper.AlarmInfoMapper">
+
+    <insert id="insert" parameterType="org.example.xiaomibms.entity.AlarmInfo">
+        INSERT INTO alarm_info (
+        vid, cid, battery_type, rule_id, rule_name, alarm_level, is_alarm,
+        signal_data, signal_time, create_time
+        ) VALUES (
+        #{vid}, #{cid}, #{batteryType}, #{ruleId}, #{ruleName}, #{alarmLevel}, #{isAlarm},
+        #{signalData}, #{signalTime}, now()
+        )
+    </insert>
+
+    <select id="selectByVid" resultType="org.example.xiaomibms.entity.AlarmInfo">
+        SELECT * FROM alarm_info WHERE vid = #{vid} ORDER BY signal_time DESC
+    </select>
+
+</mapper>
