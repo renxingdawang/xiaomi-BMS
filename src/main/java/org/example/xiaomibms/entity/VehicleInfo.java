@@ -1,11 +1,12 @@
 package org.example.xiaomibms.entity;
 
 import lombok.Data;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Data
-
+@Setter
 public class VehicleInfo {
 
     private String vid;
