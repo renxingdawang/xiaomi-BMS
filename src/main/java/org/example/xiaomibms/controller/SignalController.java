@@ -1,6 +1,5 @@
 package org.example.xiaomibms.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.example.xiaomibms.dto.SignalReportDTO;
 import org.example.xiaomibms.service.SignalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import java.util.List;
 public class SignalController {
     @Autowired
     private SignalService signalService;
-
 
     @PostMapping("/report")
     public String reportBatterySignal(@RequestBody List<SignalReportDTO> signalList) {
