@@ -54,3 +54,4 @@ CREATE TABLE alarm_info (
                             INDEX idx_vid_time (vid, signal_time),
                             INDEX idx_rule_id (rule_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='预警信息记录表';
+
