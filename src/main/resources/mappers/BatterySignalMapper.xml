@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.xiaomibms.mapper.BatterySignalMapper">
+
+    <insert id="insert" parameterType="org.example.xiaomibms.entity.BatterySignal">
+        INSERT INTO battery_signal (vid, cid, battery_type, mx, mi, ix, ii, signal_time, create_time, update_time)
+        VALUES (#{vid}, #{cid}, #{batteryType}, #{mx}, #{mi}, #{ix}, #{ii}, #{signalTime}, now(), now())
+    </insert>
+
+    <select id="selectByVid" resultType="org.example.xiaomibms.entity.BatterySignal">
+        SELECT * FROM battery_signal WHERE vid = #{vid}
+    </select>
+
+</mapper>

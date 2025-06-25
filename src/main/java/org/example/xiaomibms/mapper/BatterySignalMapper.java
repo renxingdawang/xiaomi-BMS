@@ -1,5 +1,11 @@
 package org.example.xiaomibms.mapper;
 
-public interface BatterySignalMapper {
+import org.apache.ibatis.annotations.Mapper;
+import org.example.xiaomibms.entity.BatterySignal;
 
+import java.util.List;
+@Mapper
+public interface BatterySignalMapper {
+    int insert(BatterySignal batterySignal);
+    List<BatterySignal> selectByVid(String vid);
 }
