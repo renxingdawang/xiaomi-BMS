@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface SignalService {
     void saveSignals(List<SignalReportDTO> signalList);
+    String querySignal(Integer cid);
+
 }

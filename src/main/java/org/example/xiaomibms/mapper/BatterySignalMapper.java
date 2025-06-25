@@ -8,4 +8,5 @@ import java.util.List;
 public interface BatterySignalMapper {
     int insert(BatterySignal batterySignal);
     List<BatterySignal> selectByVid(String vid);
+    BatterySignal selectLatestByVid(Integer cid);
 }

@@ -13,4 +13,13 @@
         SELECT * FROM battery_signal WHERE vid = #{vid}
     </select>
 
+    <select id="selectLatestByVid" resultType="org.example.xiaomibms.entity.BatterySignal">
+        SELECT *
+        FROM battery_signal
+        WHERE cid = #{cid}
+        ORDER BY signal_time DESC
+            LIMIT 1
+    </select>
+
+
 </mapper>

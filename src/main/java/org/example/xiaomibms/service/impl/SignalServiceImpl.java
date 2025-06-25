@@ -56,4 +56,26 @@ public class SignalServiceImpl implements SignalService {
             }
         }
     }
+    @Override
+    public String querySignal(Integer cid){
+        VehicleInfo vehicleInfo=vehicleInfoMapper.selectByCid(cid);
+        String redisKey = "battery_signal:" + vehicleInfo.getVid();
+        // 1. 先从 Redis 查询
+        String cached = redisTemplate.opsForValue().get(redisKey);
+        if (cached != null) {
+            return "data from redis: " + cached;
+        }
+        // 2. 如果缓存没有，则查询数据库
+        BatterySignal latest = batterySignalMapper.selectLatestByVid(cid);
+        if (latest == null) {
+            return "no exist data";
+        }
+        try {
+            String json = objectMapper.writeValueAsString(latest);
+            redisTemplate.opsForValue().set(redisKey, json); // 写入缓存
+            return "data from MySQL: " + json;
+        } catch (Exception e) {
+            throw new RuntimeException("Error Json", e);
+        }
+    }
 }

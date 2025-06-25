@@ -3,10 +3,7 @@ package org.example.xiaomibms.controller;
 import org.example.xiaomibms.dto.SignalReportDTO;
 import org.example.xiaomibms.service.SignalService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,4 +18,10 @@ public class SignalController {
         signalService.saveSignals(signalList);
         return "ok";
     }
+
+    @GetMapping("/query")
+    public String querySignal(@RequestParam Integer cid) {
+        return signalService.querySignal(cid);
+    }
+
 }
