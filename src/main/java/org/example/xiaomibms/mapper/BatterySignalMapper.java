@@ -1,5 +1,5 @@
 package org.example.xiaomibms.mapper;
 
-public class BatterySignalMapper {
+public interface BatterySignalMapper {
 
 }

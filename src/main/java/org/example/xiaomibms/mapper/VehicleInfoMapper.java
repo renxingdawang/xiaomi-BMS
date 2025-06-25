@@ -6,8 +6,7 @@ import org.example.xiaomibms.entity.VehicleInfo;
 
 import java.util.List;
 @Mapper
-public class VehicleInfoMapper {
-    @Select
+public interface VehicleInfoMapper {
     int insert(VehicleInfo vehicleInfo);
     VehicleInfo selectByVid(String vid);
     List<VehicleInfo> selectAll();
