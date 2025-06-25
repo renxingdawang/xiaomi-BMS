@@ -1,0 +1,14 @@
+package org.example.xiaomibms.mapper;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+import org.example.xiaomibms.entity.VehicleInfo;
+
+import java.util.List;
+@Mapper
+public class VehicleInfoMapper {
+    @Select
+    int insert(VehicleInfo vehicleInfo);
+    VehicleInfo selectByVid(String vid);
+    List<VehicleInfo> selectAll();
+}

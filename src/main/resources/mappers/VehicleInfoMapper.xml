@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.xiaomibms.mapper.VehicleInfoMapper">
+
+    <insert id="insert" parameterType="org.example.xiaomibms.entity.VehicleInfo">
+        INSERT INTO vehicle_info (vid, cid, battery_type, total_mileage, battery_health_status, create_time, update_time)
+        VALUES (#{vid}, #{cid}, #{batteryType}, #{totalMileage}, #{batteryHealthStatus}, now(), now())
+    </insert>
+
+    <select id="selectByVid" resultType="org.example.xiaomibms.entity.VehicleInfo">
+        SELECT * FROM vehicle_info WHERE vid = #{vid} AND delete_time IS NULL
+    </select>
+
+    <select id="selectAll" resultType="org.example.xiaomibms.entity.VehicleInfo">
+        SELECT * FROM vehicle_info WHERE delete_time IS NULL
+    </select>
+
+</mapper>
