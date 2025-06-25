@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.xiaomibms.mapper.AlarmRuleMapper">
+
+    <select id="findRules" resultType="org.example.xiaomibms.entity.AlarmRule">
+        SELECT * FROM alarm_rule
+        WHERE battery_type = #{batteryType}
+        AND diff_type = #{diffType}
+        AND #{diffValue} &gt;= min_diff
+        AND #{diffValue} &gt; max_diff AND delete_time IS NULL
+    </select>
+</mapper>
