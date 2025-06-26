@@ -1,6 +1,7 @@
 package org.example.xiaomibms.controller;
 
 import org.example.xiaomibms.dto.SignalReportDTO;
+import org.example.xiaomibms.response.ApiResponse;
 import org.example.xiaomibms.service.SignalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,24 +18,25 @@ public class SignalController {
     }
 
     @PostMapping("/report")
-    public String reportBatterySignal(@RequestBody List<SignalReportDTO> signalList) {
+    public ApiResponse<String> reportBatterySignal(@RequestBody List<SignalReportDTO> signalList) {
         signalService.saveSignals(signalList);
-        return "ok";
+        return new ApiResponse<>(200, "ok", "Update ok");
     }
 
     @GetMapping("/query")
-    public String querySignal(@RequestParam Integer cid) {
-        return signalService.querySignal(cid);
+    public ApiResponse<String> querySignal(@RequestParam Integer cid) {
+        String result=signalService.querySignal(cid);
+        return new ApiResponse<>(200, "ok", result);
     }
     @PutMapping("/update")
-    public String update(@RequestParam Integer cid,@RequestBody String signalJson){
+    public ApiResponse<Integer> update(@RequestParam Integer cid,@RequestBody String signalJson){
         signalService.updateSignal(cid,signalJson);
-        return "ok";
+        return new ApiResponse<>(200, "ok", cid);
     }
     @DeleteMapping("/delete")
-    public String delete(@RequestParam Integer cid){
+    public ApiResponse<Integer> delete(@RequestParam Integer cid){
         signalService.deleteSignal(cid);
-        return "ok";
+        return new ApiResponse<>(200, "ok", cid);
     }
 
 }
