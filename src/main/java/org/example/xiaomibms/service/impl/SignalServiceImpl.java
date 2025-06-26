@@ -1,6 +1,7 @@
 package org.example.xiaomibms.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.xiaomibms.dto.SignalReportDTO;
@@ -76,6 +77,46 @@ public class SignalServiceImpl implements SignalService {
             return "data from MySQL: " + json;
         } catch (Exception e) {
             throw new RuntimeException("Error Json", e);
+        }
+    }
+
+    @Override
+    public void updateSignal(Integer cid, String newSignalJson) {
+        VehicleInfo vehicleInfo=vehicleInfoMapper.selectByCid(cid);
+        String vid=vehicleInfo.getVid();
+
+        try{
+            JsonNode signalNode=objectMapper.readTree(newSignalJson);
+            BatterySignal signal=new BatterySignal();
+            signal.setVid(vid);
+            signal.setCid(cid);
+            signal.setBatteryType(vehicleInfo.getBatteryType());
+            signal.setSignalTime(LocalDateTime.now());
+
+            if (signalNode.has("Mx")) signal.setMx(new BigDecimal(signalNode.get("Mx").asText()));
+            if (signalNode.has("Mi")) signal.setMi(new BigDecimal(signalNode.get("Mi").asText()));
+            if (signalNode.has("Ix")) signal.setIx(new BigDecimal(signalNode.get("Ix").asText()));
+            if (signalNode.has("Ii")) signal.setIi(new BigDecimal(signalNode.get("Ii").asText()));
+
+            int updated=batterySignalMapper.updateByCid(cid,signal);
+            if(updated>0){
+                String redisKey="battery_signal:"+vid;
+                redisTemplate.opsForValue().set(redisKey,newSignalJson);
+            }
+        }  catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void deleteSignal(Integer cid) {
+        VehicleInfo vehicleInfo=vehicleInfoMapper.selectByCid(cid);
+        String vid=vehicleInfo.getVid();
+
+        int deleted=batterySignalMapper.deleteByCid(cid);
+        if(deleted>0){
+            String redisKey="battery_signal"+vid;
+            redisTemplate.delete(redisKey);
         }
     }
 }

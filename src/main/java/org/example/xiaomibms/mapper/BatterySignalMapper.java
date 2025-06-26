@@ -1,6 +1,7 @@
 package org.example.xiaomibms.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.example.xiaomibms.entity.BatterySignal;
 
 import java.util.List;
@@ -10,4 +11,7 @@ public interface BatterySignalMapper {
     List<BatterySignal> selectByVid(String vid);
     BatterySignal selectLatestByVid(Integer cid);
     List<BatterySignal> findRecentSignals();
+
+    int updateByCid(Integer cid, BatterySignal signal);
+    int deleteByCid(Integer cid);
 }

@@ -24,5 +24,18 @@
         SELECT * FROM battery_signal WHERE signal_time>=NOW()-INTERVAL 2 MINUTE
     </select>
 
+    <update id="updateByCid">
+        UPDATE battery_signal
+        SET Mx = #{signal.mx},
+            Mi = #{signal.mi},
+            Ix = #{signal.ix},
+            Ii = #{signal.ii},
+            update_time = NOW()
+        WHERE cid = #{cid}
+    </update>
+    <delete id="deleteByCid">
+        DELETE FROM battery_signal
+        WHERE cid = #{cid}
+    </delete>
 
 </mapper>
