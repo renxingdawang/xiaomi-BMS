@@ -1,12 +1,12 @@
 package org.example.xiaomibms.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import org.checkerframework.checker.units.qual.A;
 import org.example.xiaomibms.entity.AlarmInfo;
 import org.example.xiaomibms.entity.AlarmRule;
 import org.example.xiaomibms.entity.BatterySignal;
 import org.example.xiaomibms.mapper.AlarmInfoMapper;
 import org.example.xiaomibms.mapper.AlarmRuleMapper;
+import org.example.xiaomibms.service.AlarmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +16,12 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class AlarmService {
+public class AlarmServiceImpl implements AlarmService {
     @Autowired
     private AlarmRuleMapper alarmRuleMapper;
     @Autowired
     private AlarmInfoMapper alarmInfoMapper;
-
+    @Override
     public void processSignal(BatterySignal signal){
         Map<String, BigDecimal>diffs=new HashMap<>();
         if(signal.getMx()!=null&&signal.getMi()!=null){

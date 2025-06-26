@@ -18,4 +18,7 @@
         SELECT * FROM alarm_info WHERE vid = #{vid} ORDER BY signal_time DESC
     </select>
 
+    <select id="selectByCid" resultType="org.example.xiaomibms.entity.AlarmInfo">
+        SELECT * FROM alarm_info WHERE cid = #{cid} ORDER BY signal_time DESC
+    </select>
 </mapper>

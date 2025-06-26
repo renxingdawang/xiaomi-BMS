@@ -21,7 +21,7 @@
             LIMIT 1
     </select>
     <select id="findRecentSignals" resultType="org.example.xiaomibms.entity.BatterySignal">
-        SELECT * FROM battery_signal WHERE signal_time>=NOW()-INTERVAL 1 MINUTE
+        SELECT * FROM battery_signal WHERE signal_time>=NOW()-INTERVAL 2 MINUTE
     </select>
 
 

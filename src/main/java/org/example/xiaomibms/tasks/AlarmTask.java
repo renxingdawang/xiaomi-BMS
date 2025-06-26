@@ -15,7 +15,7 @@ import java.util.Set;
 public class AlarmTask {
     @Autowired
     private StringRedisTemplate redisTemplate;
-    //@Autowired
+    @Autowired
     private RocketMQTemplate rocketMQTemplate;
     @Scheduled(fixedRate = 300_000) // 每5分钟执行
     public void scanSignalsAndSendAlarm() {

@@ -9,5 +9,6 @@ import java.util.List;
 public interface AlarmInfoMapper {
     int insert(AlarmInfo alarmInfo);
     List<AlarmInfo> selectByVid(String vid);
+    List<AlarmInfo> selectByCid(Integer cid);
 }
 

@@ -55,3 +55,34 @@ CREATE TABLE alarm_info (
                             INDEX idx_rule_id (rule_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='预警信息记录表';
 
+-- 三元电池 - 电压差报警
+INSERT INTO alarm_rule (rule_id, alarm_type, battery_type, diff_type, min_diff, max_diff, alarm_level)
+VALUES
+    (1, '电压差报警', '三元电池', 'Mx-Mi', 5.0, 9999.0, 0),
+    (1, '电压差报警', '三元电池', 'Mx-Mi', 3.0, 5.0, 1),
+    (1, '电压差报警', '三元电池', 'Mx-Mi', 1.0, 3.0, 2),
+    (1, '电压差报警', '三元电池', 'Mx-Mi', 0.6, 1.0, 3),
+    (1, '电压差报警', '三元电池', 'Mx-Mi', 0.2, 0.6, 4);
+
+-- 铁锂电池 - 电压差报警
+INSERT INTO alarm_rule (rule_id, alarm_type, battery_type, diff_type, min_diff, max_diff, alarm_level)
+VALUES
+    (1, '电压差报警', '铁锂电池', 'Mx-Mi', 2.0, 9999.0, 0),
+    (1, '电压差报警', '铁锂电池', 'Mx-Mi', 1.0, 2.0, 1),
+    (1, '电压差报警', '铁锂电池', 'Mx-Mi', 0.7, 1.0, 2),
+    (1, '电压差报警', '铁锂电池', 'Mx-Mi', 0.4, 0.7, 3),
+    (1, '电压差报警', '铁锂电池', 'Mx-Mi', 0.2, 0.4, 4);
+
+-- 三元电池 - 电流差报警
+INSERT INTO alarm_rule (rule_id, alarm_type, battery_type, diff_type, min_diff, max_diff, alarm_level)
+VALUES
+    (2, '电流差报警', '三元电池', 'Ix-Ii', 3.0, 9999.0, 0),
+    (2, '电流差报警', '三元电池', 'Ix-Ii', 1.0, 3.0, 1),
+    (2, '电流差报警', '三元电池', 'Ix-Ii', 0.2, 1.0, 2);
+
+-- 铁锂电池 - 电流差报警
+INSERT INTO alarm_rule (rule_id, alarm_type, battery_type, diff_type, min_diff, max_diff, alarm_level)
+VALUES
+    (2, '电流差报警', '铁锂电池', 'Ix-Ii', 1.0, 9999.0, 0),
+    (2, '电流差报警', '铁锂电池', 'Ix-Ii', 0.5, 1.0, 1),
+    (2, '电流差报警', '铁锂电池', 'Ix-Ii', 0.2, 0.5, 2);
