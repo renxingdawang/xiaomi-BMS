@@ -9,4 +9,5 @@ public interface BatterySignalMapper {
     int insert(BatterySignal batterySignal);
     List<BatterySignal> selectByVid(String vid);
     BatterySignal selectLatestByVid(Integer cid);
+    List<BatterySignal> findRecentSignals();
 }
