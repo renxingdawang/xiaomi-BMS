@@ -1,5 +1,6 @@
 package org.example.xiaomibms.service.impl;
 
+import org.slf4j.Logger;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,12 +10,15 @@ import org.example.xiaomibms.entity.VehicleInfo;
 import org.example.xiaomibms.mapper.BatterySignalMapper;
 import org.example.xiaomibms.mapper.VehicleInfoMapper;
 import org.example.xiaomibms.service.SignalService;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class SignalServiceImpl implements SignalService {
@@ -22,7 +26,7 @@ public class SignalServiceImpl implements SignalService {
     private final StringRedisTemplate redisTemplate;
     private final ObjectMapper objectMapper;
     private final VehicleInfoMapper vehicleInfoMapper;
-
+    private static final Logger log = LoggerFactory.getLogger(SignalServiceImpl.class);
     public SignalServiceImpl(BatterySignalMapper batterySignalMapper, StringRedisTemplate redisTemplate, ObjectMapper objectMapper, VehicleInfoMapper vehicleInfoMapper) {
         this.batterySignalMapper = batterySignalMapper;
         this.redisTemplate = redisTemplate;
@@ -86,8 +90,10 @@ public class SignalServiceImpl implements SignalService {
     public void updateSignal(Integer cid, String newSignalJson) {
         VehicleInfo vehicleInfo=vehicleInfoMapper.selectByCid(cid);
         String vid=vehicleInfo.getVid();
-
+        String redisKey = "battery_signal:" + vid;
         try{
+            //先删除缓存（避免并发写入时旧数据残留）
+            redisTemplate.delete(redisKey);
             JsonNode signalNode=objectMapper.readTree(newSignalJson);
             BatterySignal signal=new BatterySignal();
             signal.setVid(vid);
@@ -102,12 +108,19 @@ public class SignalServiceImpl implements SignalService {
 
             int updated=batterySignalMapper.updateByCid(cid,signal);
             if(updated>0){
-                String redisKey="battery_signal:"+vid;
                 redisTemplate.opsForValue().set(redisKey,newSignalJson);
             }
         }  catch (JsonProcessingException e) {
+            String cached = redisTemplate.opsForValue().get(redisKey);
+            if (cached != null) {
+                log.error("Redis update failed, keep cache: {}", cached);
+            }
             throw new RuntimeException(e);
         }
+        //延时删除（解决并发读场景下的脏数据）
+        CompletableFuture.delayedExecutor(100, TimeUnit.MILLISECONDS).execute(() -> {
+            redisTemplate.delete(redisKey);
+        });
     }
 
     @Override
