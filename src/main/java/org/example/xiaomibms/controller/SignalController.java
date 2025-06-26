@@ -23,5 +23,15 @@ public class SignalController {
     public String querySignal(@RequestParam Integer cid) {
         return signalService.querySignal(cid);
     }
+    @PutMapping("/update")
+    public String update(@RequestParam Integer cid,@RequestBody String signalJson){
+        signalService.updateSignal(cid,signalJson);
+        return "ok";
+    }
+    @DeleteMapping("/delete")
+    public String delete(@RequestParam Integer cid){
+        signalService.deleteSignal(cid);
+        return "ok";
+    }
 
 }

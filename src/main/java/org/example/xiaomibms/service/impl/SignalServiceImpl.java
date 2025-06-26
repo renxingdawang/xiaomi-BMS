@@ -1,7 +1,6 @@
 package org.example.xiaomibms.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.xiaomibms.dto.SignalReportDTO;
@@ -115,7 +114,7 @@ public class SignalServiceImpl implements SignalService {
 
         int deleted=batterySignalMapper.deleteByCid(cid);
         if(deleted>0){
-            String redisKey="battery_signal"+vid;
+            String redisKey="battery_signal:"+vid;
             redisTemplate.delete(redisKey);
         }
     }
