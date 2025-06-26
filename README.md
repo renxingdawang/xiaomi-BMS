@@ -12,3 +12,5 @@
 /docs
 ```
 
+[github]: https://github.com/renxingdawang/xiaomi-BMS
+
