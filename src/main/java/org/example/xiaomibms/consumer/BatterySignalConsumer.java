@@ -10,8 +10,12 @@ import org.springframework.stereotype.Component;
 @Component
 @RocketMQMessageListener(topic="alarm-topic",consumerGroup = "bms-consumer-group")
 public class BatterySignalConsumer implements RocketMQListener<BatterySignal> {
-    @Autowired
-    private AlarmService alarmService;
+    private final AlarmService alarmService;
+
+    public BatterySignalConsumer(AlarmService alarmService) {
+        this.alarmService = alarmService;
+    }
+
     @Override
     public void onMessage(BatterySignal signal){
         alarmService.processSignal(signal);

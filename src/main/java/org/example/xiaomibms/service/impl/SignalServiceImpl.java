@@ -9,7 +9,6 @@ import org.example.xiaomibms.entity.VehicleInfo;
 import org.example.xiaomibms.mapper.BatterySignalMapper;
 import org.example.xiaomibms.mapper.VehicleInfoMapper;
 import org.example.xiaomibms.service.SignalService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +18,18 @@ import java.util.List;
 
 @Service
 public class SignalServiceImpl implements SignalService {
-    @Autowired
-    private  BatterySignalMapper batterySignalMapper;
-    @Autowired
-    private  StringRedisTemplate redisTemplate;
-    @Autowired
-    private  ObjectMapper objectMapper;
-    @Autowired
-    private  VehicleInfoMapper vehicleInfoMapper;
+    private final BatterySignalMapper batterySignalMapper;
+    private final StringRedisTemplate redisTemplate;
+    private final ObjectMapper objectMapper;
+    private final VehicleInfoMapper vehicleInfoMapper;
+
+    public SignalServiceImpl(BatterySignalMapper batterySignalMapper, StringRedisTemplate redisTemplate, ObjectMapper objectMapper, VehicleInfoMapper vehicleInfoMapper) {
+        this.batterySignalMapper = batterySignalMapper;
+        this.redisTemplate = redisTemplate;
+        this.objectMapper = objectMapper;
+        this.vehicleInfoMapper = vehicleInfoMapper;
+    }
+
     @Override
     public void saveSignals(List<SignalReportDTO> signalList){
         for(SignalReportDTO dto:signalList){

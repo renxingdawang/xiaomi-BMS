@@ -10,8 +10,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/signal")
 public class SignalController {
-    @Autowired
-    private SignalService signalService;
+    private final SignalService signalService;
+
+    public SignalController(SignalService signalService) {
+        this.signalService = signalService;
+    }
 
     @PostMapping("/report")
     public String reportBatterySignal(@RequestBody List<SignalReportDTO> signalList) {

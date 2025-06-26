@@ -13,10 +13,14 @@ import java.util.Set;
 @Slf4j
 @Component
 public class AlarmTask {
-    @Autowired
-    private StringRedisTemplate redisTemplate;
-    @Autowired
-    private RocketMQTemplate rocketMQTemplate;
+    private final StringRedisTemplate redisTemplate;
+    private final RocketMQTemplate rocketMQTemplate;
+
+    public AlarmTask(StringRedisTemplate redisTemplate, RocketMQTemplate rocketMQTemplate) {
+        this.redisTemplate = redisTemplate;
+        this.rocketMQTemplate = rocketMQTemplate;
+    }
+
     @Scheduled(fixedRate = 300_000) // 每5分钟执行
     public void scanSignalsAndSendAlarm() {
         Set<String> keys = redisTemplate.keys("battery_signal:*");

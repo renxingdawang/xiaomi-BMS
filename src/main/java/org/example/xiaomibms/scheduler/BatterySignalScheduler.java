@@ -14,10 +14,14 @@ import static org.reflections.Reflections.log;
 
 @Component
 public class BatterySignalScheduler {
-    @Autowired
-    private BatterySignalMapper batterySignalMapper;
-    @Autowired
-    private RocketMQTemplate rocketMQTemplate;
+    private final BatterySignalMapper batterySignalMapper;
+    private final RocketMQTemplate rocketMQTemplate;
+
+    public BatterySignalScheduler(BatterySignalMapper batterySignalMapper, RocketMQTemplate rocketMQTemplate) {
+        this.batterySignalMapper = batterySignalMapper;
+        this.rocketMQTemplate = rocketMQTemplate;
+    }
+
     @Scheduled(fixedRate = 30000)
     public void scanAndSend(){
         System.out.println("定时任务执行中：{}");

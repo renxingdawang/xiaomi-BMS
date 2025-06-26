@@ -17,10 +17,14 @@ import java.util.Map;
 
 @Service
 public class AlarmServiceImpl implements AlarmService {
-    @Autowired
-    private AlarmRuleMapper alarmRuleMapper;
-    @Autowired
-    private AlarmInfoMapper alarmInfoMapper;
+    private final AlarmRuleMapper alarmRuleMapper;
+    private final AlarmInfoMapper alarmInfoMapper;
+
+    public AlarmServiceImpl(AlarmRuleMapper alarmRuleMapper, AlarmInfoMapper alarmInfoMapper) {
+        this.alarmRuleMapper = alarmRuleMapper;
+        this.alarmInfoMapper = alarmInfoMapper;
+    }
+
     @Override
     public void processSignal(BatterySignal signal){
         Map<String, BigDecimal>diffs=new HashMap<>();

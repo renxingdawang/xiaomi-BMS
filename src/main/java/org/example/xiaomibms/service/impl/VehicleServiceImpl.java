@@ -12,8 +12,12 @@ import java.time.LocalDateTime;
 
 @Service
 public class VehicleServiceImpl implements VehicleService {
-    @Autowired
-    private VehicleInfoMapper vehicleInfoMapper;
+    private final VehicleInfoMapper vehicleInfoMapper;
+
+    public VehicleServiceImpl(VehicleInfoMapper vehicleInfoMapper) {
+        this.vehicleInfoMapper = vehicleInfoMapper;
+    }
+
     @Override
     public String addVehicle(VehicleAddDTO dto){
         String vid = Snowflake.SnowflakeUid();

@@ -15,8 +15,11 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/alarm")
 public class AlarmController {
-    @Autowired
-    private AlarmInfoMapper alarmInfoMapper;
+    private final AlarmInfoMapper alarmInfoMapper;
+
+    public AlarmController(AlarmInfoMapper alarmInfoMapper) {
+        this.alarmInfoMapper = alarmInfoMapper;
+    }
 
     @GetMapping("/vehicle")
     public ApiResponse<List<AlarmInfoVO>>getAlarms(@RequestParam Integer cid){
